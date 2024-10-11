@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { @apply h-full; }
+body { @apply bg-ctp-crust text-ctp-text min-h-full flex flex-col; }
+header { @apply flex justify-between items-center p-6 pb-2; }
+footer { @apply flex justify-center items-center p-6 pt-2; }
+main { @apply flex-1; }
+
+h1 { @apply text-xl font-semibold; }
+a { @apply text-ctp-sky underline; }
