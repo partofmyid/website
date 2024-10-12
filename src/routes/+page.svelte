@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from "svelte";
 
     let exampleName = "your-name";
-    let names = ["alex", "brian", "satr14", "your-name"];
+    let names = ["alex", "bob", "satr14", "your-name"];
     let i = 0;
     let typingEffectInterval: NodeJS.Timeout;
 
@@ -28,10 +28,15 @@
     <meta name="theme-color" content="#89dceb" />
 </svelte:head>
 
-<main class="flex flex-col gap-2 justify-center items-center">
-    <span class="text-italic text-lg text-ctp-yellow">coming soon</span>
-    <h1 class="text-5xl text-center">
-        <span class="bg-gradient-to-tl from-ctp-sky to-ctp-green bg-clip-text text-transparent">{exampleName}</span>.part-of.<span class="text-ctp-subtext0">my.id</span>
-    </h1>
-    <p class="text-lg text-ctp-subtext1">your id on the web</p>
+<main class="flex flex-col justify-center items-center gap-8 max-w-4xl mx-auto">
+    <div>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl text-center my-2">
+            <span class="bg-gradient-to-tl from-ctp-sky to-ctp-green bg-clip-text text-transparent">{exampleName}</span>.part-of.<span class="text-ctp-subtext0">my.id</span>
+        </h1>
+        <p class="lg:text-xl text-ctp-subtext1 text-center">your id on the web</p>
+    </div>
+    <form action="/search">
+        <input type="text" name="q" placeholder="your-name" autocomplete="off" class="px-6 py-3" disabled />
+        <button type="submit" class="px-6 py-3 text-ctp-crust font-bold bg-gradient-to-br from-ctp-green to-ctp-sky" disabled>search</button>
+    </form>
 </main>
