@@ -3,15 +3,17 @@
 </script>
 
 <header>
-    <h1><a class="text-ctp-gren no-underline" href="/">part-of.my.id</a></h1>
-    <!-- <nav>
+    <h1 class="text-xl"><a class="text-ctp-gren no-underline" href="/">part-of.my.id</a></h1>
+    <nav>
+        <a href="/search">search</a>
         <a href="/dash">dash</a>
-    </nav> -->
-    <span class="bg-ctp-yellow px-2 py-0.5 rounded-full text-ctp-crust font-bold">coming soon</span>
+        <a href="/report">report</a>
+        <a href="/about">about</a>
+    </nav>
 </header>
 
-<slot></slot>
+<slot />
 
 <footer>
-    <p class="text-center">made by <a href="//satr14.my.id">satr14</a></p>
+    <p class="text-center">made in <span class="bg-gradient-to-t from-ctp-text via-ctp-red to-ctp-red bg-clip-text text-transparent font-semibold">indonesia</span> by <a href="//satr14.my.id">satr14</a></p>
 </footer>
