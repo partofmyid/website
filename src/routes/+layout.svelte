@@ -5,8 +5,8 @@
 <header>
     <h1 class="text-xl"><a class="text-ctp-gren no-underline" href="/">part-of.my.id</a></h1>
     <nav>
-        <!-- <a href="/dash">dash</a>
-        <a href="/report">report</a> -->
+        <a href="/dash">dash</a>
+        <a href="//github.com/partofmyid">github</a>
         <a href="/about">about</a>
     </nav>
 </header>

@@ -32,13 +32,16 @@
 
 <main class="flex flex-col justify-center items-center gap-8 max-w-4xl mx-auto">
     <div class="flex flex-col justify-center items-center">
-        <span class="bg-ctp-yellow px-2 py-0.5 rounded-full text-ctp-crust font-bold">coming soon</span>
+        <!-- <span class="bg-ctp-yellow px-2 py-0.5 rounded-full text-ctp-crust font-bold opacity-50">coming soon</span> -->
         <h1 class="text-3xl md:text-4xl lg:text-5xl text-center my-2">
             <span class="bg-gradient-to-tl from-ctp-sky to-ctp-green bg-clip-text text-transparent">{exampleName}</span>.part-of.<span class="text-transparent bg-gradient-to-tl from-ctp-subtext0 to-ctp-red bg-clip-text">my.id</span>
         </h1>
         <p class="lg:text-xl text-ctp-subtext1 text-center">your id on the web</p>
     </div>
-    <!-- <button type="submit" class="px-6 py-3 text-ctp-crust font-bold bg-gradient-to-br from-ctp-green to-ctp-sky rounded-full"><a href="https://github.com/SX-9/part-of-my-id" class="text-ctp-crust font-bold no-underline">get yours now</a></button> -->
+    <div>
+        <button type="submit" class="px-3 py-1.5 text-ctp-crust font-bold bg-gradient-to-br from-ctp-green to-ctp-sky rounded-l-full"><a href="https://github.com/partofmyid/register" class="text-ctp-crust font-bold no-underline">Register one!</a></button>
+        <button type="submit" class="px-3 py-1.5 text-ctp-crust font-bold bg-gradient-to-br from-ctp-red to-ctp-subtext0 rounded-r-full"><a href="/about" class="text-ctp-crust font-bold no-underline">What is this?</a></button>
+    </div>
     <!-- <form action="/search" class="flex flex-wrap justify-center items-center">
         <input type="text" name="q" placeholder="your-name" autocomplete="off" class="px-6 py-3 sm:rounded-l-full" />
         <button type="submit" class="px-6 py-3 text-ctp-crust font-bold bg-gradient-to-br from-ctp-green to-ctp-sky sm:rounded-r-full">search</button>
