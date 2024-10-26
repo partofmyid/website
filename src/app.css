@@ -3,18 +3,23 @@
 @tailwind utilities;
 
 html { @apply h-full; }
-body { @apply bg-ctp-crust text-ctp-text min-h-full flex flex-col; }
+body { @apply bg-ctp-crust text-ctp-text min-h-full flex flex-col scroll-smooth; }
 nav { @apply flex justify-between items-center gap-2; }
 header { @apply sticky top-0 bg-ctp-base flex justify-between items-center gap-2 mx-6 mt-0 mb-2 p-2 rounded-b-lg shadow-md; }
 footer { @apply flex justify-center items-center p-6 pt-2; }
 main { @apply flex-1; }
-article { @apply bg-ctp-mantle p-4 sm:p-6 md:p-8 flex flex-col gap-4; }
+article { @apply p-4 sm:p-6 md:p-8 flex flex-col gap-4; }
 
 h1 { @apply text-3xl sm:text-4xl font-semibold; }
 h2 { @apply text-2xl sm:text-3xl font-semibold; }
+h3 { @apply text-xl sm:text-2xl font-semibold; }
+h4 { @apply text-lg sm:text-xl font-semibold; }
 p { @apply text-base sm:text-lg; }
 a { @apply text-ctp-sky underline; }
-code { @apply bg-ctp-overlay0 p-0.5 rounded-sm; }
+code { @apply bg-ctp-surface0 p-0.5 rounded-sm; }
+pre { @apply bg-ctp-surface0 p-4 rounded-md overflow-x-auto text-sm; }
+li { @apply list-disc ml-6 text-base sm:text-lg; }
+hr { @apply border-ctp-surface0 border-t-2 my-4; }
 
-input[type="text"] { @apply bg-ctp-base disabled:opacity-50 disabled:cursor-not-allowed; }
+input[type="text"] { @apply bg-ctp-base disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
 button { @apply bg-ctp-overlay0 disabled:opacity-50 disabled:cursor-not-allowed; }

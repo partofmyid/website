@@ -5,9 +5,10 @@
 <header>
     <h1 class="text-xl"><a class="text-ctp-gren no-underline" href="/">part-of.my.id</a></h1>
     <nav>
+        <a href="/docs">docs</a>
         <a href="/dash">dash</a>
         <a href="//github.com/partofmyid">github</a>
-        <a href="/about">about</a>
+        <a href="//discord.gg/rFyRF3MMhc">discord</a>
     </nav>
 </header>
 

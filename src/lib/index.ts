@@ -1,0 +1,1 @@
+export const apiBaseURL = 'https://partofmyid-api.satr14.my.id';
