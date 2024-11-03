@@ -12,7 +12,7 @@
             </div>
             <div class="bg-ctp-mantle p-4">
                 <h2 class="text-lg">3. This subdomain is banned</h2>
-                <p class="text-sm">in which case you should contact the administrator for more information.</p>
+                <p class="text-sm">in which case you should contact maintainers for more information.</p>
             </div>
         </div>
     </div>

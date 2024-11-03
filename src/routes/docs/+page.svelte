@@ -26,25 +26,27 @@
 
         <h2>Domain JSON file structure</h2>
         <p>Each subdomain has a corresponding <code>domains/*.json</code> file that contains its records and owner.</p>
-        <h2>Example JSON file:</h2>
-        <pre>{JSON.stringify({
-            "description": "Project Description (optional)",
-            "owner": {
-                "username": "github-username"
-            },
-            "record": {
-                "A": ["1.1.1.1", "1.0.0.1"],
-                "AAAA": ["::1", "::2"],
-                "CNAME": "example.com",
-                "MX": ["mx1.example.com", "mx2.example.com"],
-                "TXT": ["example_verification=1234567890"],
-                "SRV": [
-                    { "priority": 10, "weight": 60, "port": 5060, "target": "sipserver.example.com" },
-                    { "priority": 20, "weight": 10, "port": 5061, "target": "sipbackup.example.com" }
-                ]
-            },
-            "proxied": false
-        }, null, 4)}</pre>
+        <details>
+            <summary>Example JSON file:</summary>
+            <pre>{JSON.stringify({
+                "description": "Project Description (optional)",
+                "owner": {
+                    "username": "github-username"
+                },
+                "record": {
+                    "A": ["1.1.1.1", "1.0.0.1"],
+                    "AAAA": ["::1", "::2"],
+                    "CNAME": "example.com",
+                    "MX": ["mx1.example.com", "mx2.example.com"],
+                    "TXT": ["example_verification=1234567890"],
+                    "SRV": [
+                        { "priority": 10, "weight": 60, "port": 5060, "target": "sipserver.example.com" },
+                        { "priority": 20, "weight": 10, "port": 5061, "target": "sipbackup.example.com" }
+                    ]
+                },
+                "proxied": false
+            }, null, 4)}</pre>
+        </details>
         <h3>Filename</h3>
         <p>
             The filename of the JSON file should be the subdomain name with the <code>.json</code> extension and the file must be placed in the <code>domains</code> directory. For example, <code>domains/example.json</code> to get <code>example.part-of.my.id</code>. But we do have requirements for subdomain names:

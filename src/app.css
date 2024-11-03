@@ -5,8 +5,8 @@
 html { @apply h-full; }
 body { @apply bg-ctp-crust text-ctp-text min-h-full flex flex-col scroll-smooth; }
 nav { @apply flex justify-between items-center gap-2; }
-header { @apply sticky top-0 bg-ctp-base flex justify-between items-center gap-2 mx-6 mt-0 mb-2 p-2 rounded-b-lg shadow-md; }
-footer { @apply flex justify-center items-center p-6 pt-2; }
+header { @apply sticky top-0 bg-ctp-base flex justify-between items-center gap-2 mx-6 mt-0 mb-2 p-2 h-12 rounded-b-lg shadow-md; }
+footer { @apply flex flex-col justify-center items-center p-6 pt-2; }
 main { @apply flex-1; }
 article { @apply p-4 sm:p-6 md:p-8 flex flex-col gap-4; }
 
@@ -17,7 +17,7 @@ h4 { @apply text-lg sm:text-xl font-semibold; }
 p { @apply text-base sm:text-lg; }
 a { @apply text-ctp-sky underline; }
 code { @apply bg-ctp-surface0 p-0.5 rounded-sm; }
-pre { @apply bg-ctp-surface0 p-4 rounded-md overflow-x-auto text-sm; }
+pre { @apply bg-ctp-surface0 p-4 rounded-md overflow-x-auto max-w-full text-sm; }
 li { @apply list-disc ml-6 text-base sm:text-lg; }
 hr { @apply border-ctp-surface0 border-t-2 my-4; }
 

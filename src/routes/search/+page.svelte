@@ -6,17 +6,20 @@
 
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
+    let available = false;
 
     onMount(() => {
         if (!q) return goto("/");
         fetch(`${apiBaseURL}/query/check/${q}`)
             .then(res => res.json()).then(data => {
-                console.log(data);
+                available = data?.available || false;
             });
     });
 </script>
 
-<main class="flex flex-col gap-2 justify-center items-center">
-    <h1>WIP</h1>
-    <p>Work in progress, please register manually.</p>
+<main class="flex flex-col sm:flex-row gap-2 justify-center items-center">
+    <div>
+        <h1><span class="underline">{q}</span><span class="text-ctp-subtext0">.is-a.dev</span></h1>
+        <h2 class="text-base italic text-ctp-red data-[available=true]:text-ctp-green" data-available={available}>is {available ? 'available!' : 'taken... sorry'}</h2>
+    </div>
 </main>
