@@ -3,6 +3,7 @@ import GH from "@auth/sveltekit/providers/github";
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from "$env/static/private";
 
 export const { handle } = SvelteKitAuth({
+    trustHost: true,
     providers: [
         GH({
             clientId: GH_CLIENT_ID,
