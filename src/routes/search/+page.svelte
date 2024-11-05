@@ -34,6 +34,14 @@
             <div>
                 <h1><span class="underline">{q}</span><span class="text-ctp-subtext0">.part-of.my.id</span></h1>
                 <h2 class="text-base italic text-ctp-red data-[available=true]:text-ctp-green" data-available={available || editable}>is {available ? 'available!' : (editable ? 'owned by you!' : 'taken... sorry')}</h2>
+                {#if !available && JSON.parse(file).description}
+                    <p>
+                        {JSON.parse(file).description}
+                    </p>
+                {/if}
+                {#if editable}
+                    <input type="text" placeholder="Commit message..." class=" p-2 w-full my-2" disabled>
+                {/if}
             </div>
             <div class="my-2">
                 {#if !available}

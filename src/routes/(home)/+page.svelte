@@ -60,7 +60,7 @@
         </div>
         <form action="/search" class="flex flex-wrap justify-center items-center">
             <input type="text" name="q" placeholder="your-name" autocomplete="off" class="px-6 py-3 sm:rounded-l-full w-40 pr-0" pattern="[a-z0-9-]+" required />
-            <span class="bg-ctp-base p-3 pl-0 italic">.part-of.my.id</span>
+            <span class="bg-ctp-surface0 py-3 pr-4 italic">.part-of.my.id</span>
             <button type="submit" class="px-6 py-3 text-ctp-crust font-bold bg-gradient-to-br from-ctp-green to-ctp-sky sm:rounded-r-full">search</button>
         </form>
         <div class="flex justify-center items-center text-center gap-2">
