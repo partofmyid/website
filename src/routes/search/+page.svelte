@@ -7,7 +7,7 @@
     
     let available = false;
     let editable = false;
-    let file = "";
+    let file = "{}";
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
@@ -30,26 +30,38 @@
 
 <main class="flex justify-center items-center">
     <div class="flex flex-col md:flex-row gap-4 mx-2">
-        <div class="bg-ctp-base p-4 md:rounded-l-xl flex flex-col justify-between">
+        <div class="bg-ctp-base p-4 flex flex-col h-min">
             <div>
                 <h1><span class="underline">{q}</span><span class="text-ctp-subtext0">.part-of.my.id</span></h1>
-                <h2 class="text-base italic text-ctp-red data-[editable=true]:text-ctp-green" data-available={editable}>is {available ? 'available!' : (editable ? 'owned by you!' : 'taken... sorry')}</h2>
+                <h2 class="text-base italic text-ctp-red data-[available=true]:text-ctp-green" data-available={available || editable}>is {available ? 'available!' : (editable ? 'owned by you!' : 'taken... sorry')}</h2>
             </div>
-
             <div class="my-2">
                 {#if !available}
-                    <button class="rounded-l-full text-ctp-crust bg-ctp-sapphire"><a href={
-                        'https://github.com/partofmyid/register/edit/main/domains/' + q + '.json'
+                    <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={
+                        'https://github.com/partofmyid/register/blob/main/domains/' + q + '.json'
                     }>File</a></button>
-                    <button class="rounded-r-full">Owner</button>
+                    <button class="rounded-r-full"><a  class="text-ctp-text no-underline" href={
+                        'https://github.com/' + JSON.parse(file)?.owner?.username
+                    }>Owner</a></button>
+                {:else}
+                    <button class="rounded-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={
+                        'https://github.com/partofmyid/register/new/main/domains?filename=' + q + '.json'
+                    }>Register</a></button>
                 {/if}
             </div>
         </div>
-        <div class="bg-ctp-base p-4 md:rounded-r-xl">
-            {#if !available}
-                <code>domains/{q}.json:</code>
-                <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly={!editable} value={file}></textarea>
-            {/if}
-        </div>
+        {#if !available}
+            <div class="bg-ctp-base p-4">
+                <div class="flex justify-between">
+                    <code>domains/{q}.json</code>
+                    {#if editable}
+                        <button class="bg-ctp-green text-ctp-crust" disabled>
+                            Commit
+                        </button>
+                    {/if}
+                </div>
+                <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly={!editable} value={file} spellcheck={false}></textarea>
+            </div>
+        {/if}
     </div>
 </main>
