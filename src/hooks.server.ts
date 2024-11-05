@@ -1,8 +1,11 @@
-import { SvelteKitAuth } from "@auth/sveltekit";
+import { dev } from "$app/environment";
 import GH from "@auth/sveltekit/providers/github";
+import { SvelteKitAuth, type Session } from "@auth/sveltekit";
 import { GH_CLIENT_ID, GH_CLIENT_SECRET } from "$env/static/private";
+import type { AdapterSession, AdapterUser } from "@auth/core/adapters";
 
 export const { handle } = SvelteKitAuth({
+    debug: dev,
     trustHost: true,
     providers: [
         GH({
@@ -16,9 +19,12 @@ export const { handle } = SvelteKitAuth({
             return token;
         },
         async session({ session, token }) {
-            // @ts-ignore
-            session.access_token = token.accessToken;
-            return session;
+            let ret: {
+                user: AdapterUser;
+                access_token?: string;
+            } & AdapterSession & Session = session;
+            ret.access_token = token.accessToken as string;
+            return ret;
         },
     },
 });

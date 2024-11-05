@@ -3,9 +3,10 @@
     import { page } from "$app/stores";
     import "../app.css";
     import { onMount } from "svelte";
+    import { dev } from "$app/environment";
 
     onMount(() => {
-        console.log($page.data.session);
+        if (dev) console.log($page.data.session);
     });
 </script>
 

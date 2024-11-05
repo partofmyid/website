@@ -22,4 +22,5 @@ li { @apply list-disc ml-6 text-base sm:text-lg; }
 hr { @apply border-ctp-surface0 border-t-2 my-4; }
 
 input[type="text"] { @apply bg-ctp-base disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
-button { @apply bg-ctp-overlay0 disabled:opacity-50 disabled:cursor-not-allowed; }
+button { @apply bg-ctp-surface0 py-1 px-2 font-bold disabled:opacity-50 disabled:cursor-not-allowed; }
+textarea { @apply bg-ctp-surface0 rounded-lg font-mono text-nowrap p-2 resize-none my-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
