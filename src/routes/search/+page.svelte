@@ -8,6 +8,29 @@
     let available = false;
     let editable = false;
     let file = "{}";
+    let user = '';
+    let values: [string, string][] = [];
+    let records: {
+        "A"?: string[],
+        "AAAA"?: string[],
+        "CNAME"?: string,
+        "MX"?: string[],
+        // "NS"?: string[],
+        "TXT"?: string[],
+        // "CAA"?: {
+        //     "flags": number,
+        //     "tag": string,
+        //     "value": string,
+        // }[],
+        "SRV"?: {
+            "priority": number,
+            "weight": number,
+            "port": number,
+            "target": string,
+        }[],
+        // "PTR"?: string[],
+        "ALIAS"?: string,
+    } = {};
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
@@ -15,15 +38,30 @@
         auth: $page.data.session?.access_token || '',
     });
 
+    function convertAndRegister(e: Event) {
+        e.preventDefault();
+        records = {};
+        register(records);
+    }
+
+    function register(record: Record<string, any>) {
+        window.open('https://github.com/partofmyid/register/new/main/domains?filename=' + q + '.json'
+            + '&value=' + encodeURIComponent(JSON.stringify({
+                owner: {
+                    username: user,
+                }, record,
+            }, null, 4)));
+    }
+
     onMount(async () => {
         if (!q) return goto("/");
         const res = await fetch(`${apiBaseURL}/query/check/${q}`).then((res) => res.json());
         available = res.available;
 
-        if (!available) {
-            file = await fetch(`https://raw.githubusercontent.com/partofmyid/register/main/domains/${q}.json`).then(res => res.text());
-            const user = await octokit.rest.users.getAuthenticated()
-            if (JSON.parse(file).owner.username === user.data.login) editable = true;
+        if (!available) file = await fetch(`https://raw.githubusercontent.com/partofmyid/register/main/domains/${q}.json`).then(res => res.text());
+        if ($page.data.session) {
+            user = (await octokit.rest.users.getAuthenticated()).data.login;
+            if (JSON.parse(file)?.owner?.username === user) editable = true;
         }
     });
 </script>
@@ -58,18 +96,43 @@
                 {/if}
             </div>
         </div>
-        {#if !available}
-            <div class="bg-ctp-base p-4">
-                <div class="flex justify-between">
-                    <code>domains/{q}.json</code>
-                    {#if editable}
-                        <button class="bg-ctp-green text-ctp-crust" disabled>
-                            Commit
-                        </button>
-                    {/if}
-                </div>
-                <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly={!editable} value={file} spellcheck={false}></textarea>
-            </div>
-        {/if}
+        <div class="bg-ctp-base p-4">
+            {#if !available}
+                    <div class="flex justify-between">
+                        <code>domains/{q}.json</code>
+                        {#if editable}
+                            <button class="bg-ctp-green text-ctp-crust" disabled>
+                                Commit
+                            </button>
+                        {/if}
+                    </div>
+                    <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly={!editable} value={file} spellcheck={false}></textarea>
+            {:else}
+                <form on:submit={convertAndRegister}>
+                    <div class="my-2">
+                        {#each values as _, i}
+                            <div class="flex gap-2">
+                                <select class="rounded-l-full p-2 w-24" bind:value={values[i][0]}>
+                                    <option value="A">A</option>
+                                    <option value="AAAA">AAAA</option>
+                                    <option value="CNAME">CNAME</option>
+                                    <option value="MX">MX</option>
+                                    <option value="TXT">TXT</option>
+                                    <option value="SRV">SRV</option>
+                                    <option value="ALIAS">ALIAS</option>
+                                </select>
+                                <input type="text" placeholder="Value" class="p-2 w-32" bind:value={values[i][1]}>
+                                <button class="bg-ctp-red text-ctp-crust rounded-r-full" type="button" on:click={() => values.splice(i, 1)}>Remove</button>
+                            </div>
+                        {/each}
+                    </div>
+                    <button class="rounded-l-full bg-ctp-sapphire text-ctp-crust" type="submit" disabled={!values.length}>Register</button>
+                    <button class="rounded-r-full bg-ctp-green text-ctp-crust" type="button" on:click={() => {
+                        values.push(['','']);
+                        values = [...values];
+                    }}>Add record</button>
+                </form>
+            {/if}
+        </div>
     </div>
 </main>
