@@ -26,6 +26,8 @@ th, td { @apply border-ctp-surface0 border border-solid p-2; }
 th { @apply bg-ctp-surface0 font-semibold; }
 td { @apply bg-ctp-surface1; }
 
-input[type="text"] { @apply bg-ctp-surface0 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
+label { @apply font-semibold text-ctp-subtext0; }
+input[type="text"], input[type="password"] { @apply bg-ctp-surface0 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
+select { @apply bg-ctp-surface0 font-mono text-nowrap p-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }
 button { @apply bg-ctp-surface0 py-1 px-2 font-bold disabled:opacity-50 disabled:cursor-not-allowed; }
 textarea { @apply bg-ctp-surface0 rounded-lg font-mono text-nowrap p-2 resize-none my-2 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none; }

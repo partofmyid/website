@@ -31,7 +31,10 @@
 <main class="flex flex-col gap-2 justify-center items-center">
     <div class="bg-ctp-base p-4">
         {#if $page.data.session}
-            <h1 class="text-2xl">{username}'s subdomains:</h1>
+            <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl">{username}'s subdomains:</h1>
+                <a href="/">New</a>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -61,3 +64,4 @@
         {/if}
     </div>
 </main>
+<a href="/api">_</a>

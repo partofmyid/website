@@ -4,32 +4,13 @@
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
     import { Octokit } from "octokit";
+    import RecordsForm from "$lib/RecordsForm.svelte";
     
+    let recordsForm: RecordsForm;
     let available = false;
     let editable = false;
     let file = "{}";
     let user = '';
-    let records: {
-        "A"?: string[],
-        "AAAA"?: string[],
-        "CNAME"?: string,
-        "MX"?: string[],
-        // "NS"?: string[],
-        "TXT"?: string[],
-        // "CAA"?: {
-        //     "flags": number,
-        //     "tag": string,
-        //     "value": string,
-        // }[],
-        "SRV"?: {
-            "priority": number,
-            "weight": number,
-            "port": number,
-            "target": string,
-        }[],
-        // "PTR"?: string[],
-        "ALIAS"?: string,
-    } = {};
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
@@ -52,11 +33,24 @@
         available = res.available;
 
         if (!available) file = await fetch(`https://raw.githubusercontent.com/partofmyid/register/main/domains/${q}.json`).then(res => res.text());
+        else file = JSON.stringify({
+            owner: { username: user },
+            record: {},
+        }, null, 2);
         if ($page.data.session) {
             user = (await octokit.rest.users.getAuthenticated()).data.login;
-            if (JSON.parse(file).owner.username === user) editable = true;
+            if (JSON.parse(file)?.owner?.username === user || available) editable = true;
         }
     });
+
+    function commit() {
+        const url = available ? 'https://github.com/partofmyid/register/new/main/domain?' + new URLSearchParams({
+            filename: q + '.json',
+            value: file,
+            message: ('[dashboard] add ' + q + '.part-of.my.id'),
+        }) : 'https://github.com/partofmyid/register/edit/main/domains/' + q + '.json';
+        window.open(url, '_blank');
+    }
 </script>
 
 <main class="flex justify-center items-center">
@@ -70,42 +64,40 @@
                         {JSON.parse(file).description}
                     </p>
                 {/if}
-                {#if editable}
-                    <input type="text" placeholder="Commit message..." class=" p-2 w-full my-2" disabled>
-                {/if}
             </div>
-            {#if !available}
-                <div class="my-2">
+            <div class="my-2">
+                {#if !available}
                     <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={
                         'https://' + q + '.part-of.my.id'
-                    }>Visit</a></button>
-                    <button class=""><a class="no-underline text-ctp-text" href={
+                    } target="_blank">Visit</a></button>
+                    <button data-owner={editable} class="data-[owner=true]:rounded-r-full"><a class="no-underline text-ctp-text" href={
                         'https://github.com/partofmyid/register/blob/main/domains/' + q + '.json'
                     }>File</a></button>
-                    <button class="rounded-r-full"><a  class="text-ctp-text no-underline" href={
-                        'https://github.com/' + JSON.parse(file)?.owner?.username
-                    }>Owner</a></button>
-                </div>
-            {/if}
+                    {#if !editable}
+                        <button class="rounded-r-full"><a  class="text-ctp-text no-underline" href={
+                            'https://github.com/' + JSON.parse(file)?.owner?.username
+                        }>Owner</a></button>
+                    {/if}
+                {:else}
+                    <button class="rounded-full bg-ctp-sapphire text-ctp-crust" on:click={commit}>Register</button>
+                {/if}
+            </div>
         </div>
         <div class="bg-ctp-base p-4 h-min">
-            {#if !available}
+            {#if available}
+                <RecordsForm onConvert={(generated) => {
+                    file = JSON.stringify(generated, null, 2);
+                }} username={user} autogen={true}/>
+            {:else}
                 <div class="flex justify-between">
                     <code>domains/{q}.json</code>
                     {#if editable}
-                        <button class="bg-ctp-green text-ctp-crust" disabled>
-                            Commit
+                        <button class="bg-ctp-green text-ctp-crust" on:click={commit}>
+                            Edit
                         </button>
                     {/if}
                 </div>
-                <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly={!editable} value={file} spellcheck={false}></textarea>
-            {:else}
-                <form on:submit={() => register(records)}>
-                    <div>
-                        <!-- to be continued -->
-                    </div>
-                    <button class="rounded-full bg-ctp-sapphire text-ctp-crust" type="submit">Register</button>
-                </form>
+                <textarea class="block" cols="30" rows={file.split('\n').length + 1} readonly bind:value={file} spellcheck={false}></textarea>
             {/if}
         </div>
     </div>
