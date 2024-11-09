@@ -39,10 +39,6 @@
                     "CNAME": "example.com",
                     "MX": ["mx1.example.com", "mx2.example.com"],
                     "TXT": ["example_verification=1234567890"],
-                    "SRV": [
-                        { "priority": 10, "weight": 60, "port": 5060, "target": "sipserver.example.com" },
-                        { "priority": 20, "weight": 10, "port": 5061, "target": "sipbackup.example.com" }
-                    ]
                 },
                 "proxied": false
             }, null, 4)}</pre>
@@ -63,7 +59,7 @@
         </p>
         <h4><code>owner</code> (required)</h4>
         <p>
-            The owner of the subdomain. This should be an object with the <code>username</code> key and the GitHub username as the value. you can also include other contact information and social media links. This is required so that we can reach out to you if there are any issues with your subdomain.
+            The owner of the subdomain. This should be an object with the <code>username</code> key and the GitHub username as the value. you can also include other contact information and social media links. This is required so that we can reach out to you if there are any issues with your subdomain. Please don't use a personal email as it will be public.
         </p>
         <h4><code>record</code> (required)</h4>
         <p>
@@ -75,7 +71,7 @@
             <li><code>CNAME</code> - string of the hostname</li>
             <li><code>MX</code> - array of strings of the mail server hostname</li>
             <li><code>TXT</code> - array of strings of the text record</li>
-            <li><code>SRV</code> - array of objects with the keys <code>priority</code> (number), <code>weight</code> (number), <code>port</code> (number), and <code>target</code> (string)</li>
+            <li><code>NS</code> - array of strings of nameservers</li>
         </ul>
         <h4><code>proxied</code> (optional)</h4>
         <p>
@@ -108,6 +104,14 @@
         <h3>Can I be a maintainer/join the team?</h3>
         <p>
             No, we hand pick maintainers. If we need more maintainers, we will reach out to trusted people. If you want to help, you can contribute to the codebase or help others in the discord server which can give you a higher chance of getting picked.
+        </p>
+        <h3>Can I get NS record?</h3>
+        <p>
+            No, nameservers gives you full control over the domain. We only give them to trusted people with good reasoning in their pull request.
+        </p>
+        <h3>Can I get ALIAS record?</h3>
+        <p>
+            ALIAS records are mainly used for root domains (this website). So we recommend using CNAME records instead. 
         </p>
     </article>
 </main>
