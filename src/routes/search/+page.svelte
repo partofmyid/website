@@ -44,7 +44,7 @@
     });
 
     function commit() {
-        const url = available ? 'https://github.com/partofmyid/register/new/main/domain?' + new URLSearchParams({
+        const url = available ? 'https://github.com/partofmyid/register/new/main/domains?' + new URLSearchParams({
             filename: q + '.json',
             value: file,
             message: ('[dashboard] add ' + q + '.part-of.my.id'),
