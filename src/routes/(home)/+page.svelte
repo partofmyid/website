@@ -81,11 +81,11 @@
         </div>
     </div>
     <p class="text-center" id="introduction"><a href="/#introduction">scroll down:</a></p>
-    <section class="lg:flex-row items-start flex-col">
+    <section class="lg:flex-row items-start lg:items-center flex-col">
         <div>
             <h2>Sleek and memorable web address</h2>
             <p>
-                <u>Your name is unique, so why not your web address for your website?</u> With part-of.my.id, you can have a sleek and memorable subdomain for your website thats is easy to remember and share like <b>your-name.part-of.my.id</b>.
+                <u>Your name is unique, so why not your web address for your website?</u> With part-of.my.id, you can have a nice subdomain for your website thats is easy to remember and share like <b>your-name.part-of.my.id</b>.
             </p>
         </div>
         <div class="flex flex-col justify-end text-2xl sm:text-3xl md:text-4xl xl:text-right">
@@ -93,16 +93,14 @@
             <span class="text-ctp-green"><b>you.part-of.my.id</b></span>
         </div>
     </section>
-    <section class="lg:flex-row items-end flex-col">
-        <div class="flex flex-col justify-end text-4xl text-left">
-            <a href="https://www.cloudflare.com/" target="_blank">
-                <img src="/cf.png" alt="cloudflare logo" class="w-32 lg:w-72 aspect-video object-cover">
-            </a>
-        </div>
+    <section class="lg:flex-row items-end lg:items-center flex-col">
+        <a href="https://www.cloudflare.com/" target="_blank">
+            <img src="/cf.png" alt="cloudflare logo" class="w-32 lg:w-72 h-16 aspect-video object-cover">
+        </a>
         <div class="text-right">
             <h2>Powered by Cloudflare</h2>
             <p>
-                With Cloudflare's global network, your subdomain will get all the proxy features like <u>SSL, DDoS protection, and caching.</u> It's fast, secure, and reliable so no need to worry about downtime or slow loading times.
+                With Cloudflare's global network, your subdomain can opt in to get all the proxy features like <u>SSL, DDoS protection, and caching.</u> It's fast, secure, and reliable so no need to worry about downtime or slow loading times.
             </p>
         </div>
     </section>
@@ -110,8 +108,7 @@
         <div>
             <h2>Community-driven project</h2>
             <p>
-                <u>part-of.my.id is maintained by a group of volunteers</u> who are passionate about web development and want to make it easier for everyone to have their own unique web address. We understand if getting a domain is too expensive or too complicated, so we made this project to help you get a subdomain for free.
-            </p>
+                <u>part-of.my.id is maintained by a group of volunteers</u> who are passionate about web development and want to make it easier for everyone to have their own unique web address. We are very active and your pull requests will be merged in no time.
         </div>
         <div class="grid gap-1 grid-cols-[4rem_4rem_4rem_4rem]">
             {#each maintainers as maintainer}
@@ -121,12 +118,27 @@
             {/each}
         </div>
     </section>
-    <section class="lg:flex-row items-end flex-col">
+    <section class="lg:flex-row-reverse items-end flex-col-reverse">
         <div class="text-right">
             <h2>Free and open-source</h2>
             <p>
-                <u>part-of.my.id is an open-source project</u> that is hosted on GitHub. You can contribute to the project by submitting issues, pull requests, or even just starring the repository. It's free to use and always will be.
+                <u>part-of.my.id is an open-source project</u> that is hosted on GitHub. You can help maintain the code by reporting or fixing issues. We understand getting a domain is sometimes too expensive, thats why this project is created.
             </p>
+        </div>
+        <a href="https://github.com" target="_blank" class="flex gap-2">
+            <img src="/gh.png" alt="github logo" class="size-16 min-w-16 aspect-video object-cover">
+        </a>
+    </section>
+    <section class="lg:flex-row items-end flex-col-reverse">
+        <div>
+            <h2>Treated as a separate website (<a href="https://publicsuffix.org/">PSL</a>)</h2>
+            <p>
+                All registered subdomains are treated as a separate website by the browser and other applications. This means you can have your own website with its own cookies, local storage, and cache. <u>It's like having your own domain!</u>
+            </p>
+            <span class="text-ctp-crust bg-ctp-yellow font-bold px-2 py-0.5 rounded-full my-8">coming soon: when high demand</span>
+        </div>
+        <div>
+
         </div>
     </section>
     <section class="flex-col items-center text-center my-32 gap-2">
