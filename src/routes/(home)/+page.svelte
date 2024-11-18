@@ -42,15 +42,17 @@
 
 <svelte:head>
     <title>part-of.my.id</title>
+    <meta name="description" content="your id on the web" />
+    <meta name="theme-color" content="#89dceb" />
+
     <meta property="og:title" content="part-of.my.id" />
     <meta property="og:description" content="your id on the web" />
     <meta property="og:url" content="https://part-of.my.id" />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#89dceb" />
 </svelte:head>
 
 <main>
-    <div class="flex flex-col justify-center items-center gap-8 min-h-[85vh]">
+    <div class="flex flex-col justify-center items-center gap-8 min-h-[84vh]">
         <div class="flex flex-col justify-center items-center">
             <!-- <span class="bg-ctp-yellow px-2 py-0.5 rounded-full text-ctp-crust font-bold opacity-50">coming soon</span> -->
             <h1 class="text-3xl md:text-4xl lg:text-5xl text-center my-2">
@@ -78,27 +80,59 @@
             </div>
         </div>
     </div>
-    <p class="text-center" id="introduction"><a href="/#introduction">Introduction:</a></p>
-    <article class="max-w-2xl mx-auto">
-        <h2>What is part-of.my.id?</h2>
-        <p>
-            <a href="/">part-of.my.id</a> is a personal project by <a href="//satr14.my.id">satr14</a> to provide subdomains for personal websites, open-source projects, and more. Registering a subdomain is easy on the web dashboard. Just choose one and register it. We have support for <code>A</code>, <code>AAAA</code>, <code>CNAME</code>, and <code>TXT</code> records.
-        </p>
-        <h2>Example use case:</h2>
-        <p>
-            Say your hosting a portfolio on <a href="https://github.io">GitHub Pages</a> and want to use a custom domain, you can use <a href="/">part-of.my.id</a> to create a subdomain and point it to your GitHub repository rather than buying a domain or using the default <code>github.io</code> domain.
-        </p>
-        <h2>Report a website</h2>
-        <p>
-            Everything to manage <a href="/">part-of.my.id</a> is done through the root domain only. Any subdomain is a separate website and is not created by us. If you find a website thats abusing our service or claims to be us, <a href="//github.com/SX-9/part-of-my-id/issues/new">please report it</a>.
-        </p>
-    </article>
-    <p class="text-center">Maintained by {maintainers.length} people</p>
-    <div class="flex flex-wrap justify-center items-center max-w-2xl mx-auto mb-4">
-        {#each maintainers as maintainer}
-            <a href={`//github.com/${maintainer.login}`} target="_blank" rel="noopener" class="flex flex-col justify-center items-center gap-2 p-2">
-                <img src={maintainer.avatar_url} alt={maintainer.login} class="size-16 border-2 shadow-md border-ctp-overlay1 rounded-full" />
+    <p class="text-center" id="introduction"><a href="/#introduction">scroll down:</a></p>
+    <section class="lg:flex-row items-start flex-col">
+        <div>
+            <h2>Sleek and memorable web address</h2>
+            <p>
+                <u>Your name is unique, so why not your web address for your website?</u> With part-of.my.id, you can have a sleek and memorable subdomain for your website thats is easy to remember and share like <b>your-name.part-of.my.id</b>.
+            </p>
+        </div>
+        <div class="flex flex-col justify-end text-2xl sm:text-3xl md:text-4xl xl:text-right">
+            <span class="text-ctp-red"><i><s>you.github.io/portfolio</s></i></span>
+            <span class="text-ctp-green"><b>you.part-of.my.id</b></span>
+        </div>
+    </section>
+    <section class="lg:flex-row items-end flex-col">
+        <div class="flex flex-col justify-end text-4xl text-left">
+            <a href="https://www.cloudflare.com/" target="_blank">
+                <img src="/cf.png" alt="cloudflare logo" class="w-32 lg:w-72 aspect-video object-cover">
             </a>
-        {/each}
-    </div>
+        </div>
+        <div class="text-right">
+            <h2>Powered by Cloudflare</h2>
+            <p>
+                With Cloudflare's global network, your subdomain will get all the proxy features like <u>SSL, DDoS protection, and caching.</u> It's fast, secure, and reliable so no need to worry about downtime or slow loading times.
+            </p>
+        </div>
+    </section>
+    <section class="lg:flex-row items-start lg:items-center flex-col">
+        <div>
+            <h2>Community-driven project</h2>
+            <p>
+                <u>part-of.my.id is maintained by a group of volunteers</u> who are passionate about web development and want to make it easier for everyone to have their own unique web address. We understand if getting a domain is too expensive or too complicated, so we made this project to help you get a subdomain for free.
+            </p>
+        </div>
+        <div class="grid gap-1 grid-cols-[4rem_4rem_4rem_4rem]">
+            {#each maintainers as maintainer}
+                <a href={`//github.com/${maintainer.login}`} target="_blank" rel="noopener">
+                    <img src={maintainer.avatar_url} alt={maintainer.login} class="size-16 border-2 shadow-md border-ctp-overlay1 rounded-full" />
+                </a>
+            {/each}
+        </div>
+    </section>
+    <section class="lg:flex-row items-end flex-col">
+        <div class="text-right">
+            <h2>Free and open-source</h2>
+            <p>
+                <u>part-of.my.id is an open-source project</u> that is hosted on GitHub. You can contribute to the project by submitting issues, pull requests, or even just starring the repository. It's free to use and always will be.
+            </p>
+        </div>
+    </section>
+    <section class="flex-col items-center text-center my-32 gap-2">
+        <h2>Ready to get one?</h2>
+        <p>
+            <u>Get your own subdomain now</u> by searching for your name in the search bar above!
+        </p>
+    </section>
 </main>

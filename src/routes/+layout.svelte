@@ -33,7 +33,7 @@
 
 <slot />
 
-<footer>
+<footer class="border-t border-ctp-base mt-4">
     <p class="text-center">made in <span class="bg-gradient-to-t from-ctp-text via-ctp-red to-ctp-red bg-clip-text text-transparent font-semibold">indonesia</span> by <a href="//satr14.my.id">satr14</a></p>
     <nav>
         <a class="no-underline" href="//github.com/partofmyid">github</a>
