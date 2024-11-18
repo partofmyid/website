@@ -131,7 +131,7 @@
     </section>
     <section class="lg:flex-row items-end flex-col-reverse">
         <div>
-            <h2>Treated as a separate website (<a href="https://publicsuffix.org/">PSL</a>)</h2>
+            <h2>Treated as a separate website (<a href="https://github.com/publicsuffix/list/">PSL</a>)</h2>
             <p>
                 All registered subdomains are treated as a separate website by the browser and other applications. This means you can have your own website with its own cookies, local storage, and cache. <u>It's like having your own domain!</u>
             </p>
