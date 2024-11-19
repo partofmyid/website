@@ -55,7 +55,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="part-of.my.id" />
     <meta name="twitter:description" content="your own personal id for your website" />
-    <meta name="twitter:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/profile/image.png" />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/banner.png" />
     <meta name="twitter:url" content="https://part-of.my.id" />
 </svelte:head>
 
