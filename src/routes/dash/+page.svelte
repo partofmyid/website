@@ -88,6 +88,7 @@
             {:else}
                 <p>
                     <i>You don't have any subdomains yet. Create one from the home page.</i>
+                    <br><i>If your seeing this and have domains, try re-login.</i>
                 </p>
             {/if}
         </div>
