@@ -43,18 +43,18 @@
 <svelte:head>
     <title>part-of.my.id</title>
     <meta name="title" content="part-of.my.id" />
-    <meta name="description" content="your id on the web" />
+    <meta name="description" content="your own personal id for your website" />
     <meta name="theme-color" content="#89dceb" />
 
     <meta property="og:title" content="part-of.my.id" />
-    <meta property="og:description" content="your id on the web" />
+    <meta property="og:description" content="your own personal id for your website" />
     <meta property="og:url" content="https://part-of.my.id" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/profile/image.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="part-of.my.id" />
-    <meta name="twitter:description" content="your id on the web" />
+    <meta name="twitter:description" content="your own personal id for your website" />
     <meta name="twitter:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/profile/image.png" />
     <meta name="twitter:url" content="https://part-of.my.id" />
 </svelte:head>
@@ -66,7 +66,7 @@
             <h1 class="text-3xl md:text-4xl lg:text-5xl text-center my-2">
                 <span class="bg-gradient-to-tl from-ctp-sky to-ctp-green bg-clip-text text-transparent">{exampleName}</span>.part-of.<span class="text-transparent bg-gradient-to-tl from-ctp-subtext0 to-ctp-red bg-clip-text">my.id</span>
             </h1>
-            <p class="lg:text-xl text-ctp-subtext1 text-center">your id on the web</p>
+            <p class="lg:text-xl text-ctp-subtext1 text-center">your own personal id for your website</p>
         </div>
         <form action="/search" class="flex flex-wrap justify-center items-center">
             <input type="text" name="q" placeholder="your-name" autocomplete="off" class="px-6 py-3 sm:rounded-l-full w-40 pr-0" pattern="[a-z0-9-]+" required />
