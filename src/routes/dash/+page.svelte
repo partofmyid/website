@@ -28,6 +28,7 @@
         state: string,
         url: string,
         number: number,
+        status: string,
     }[] = [];
     const octokit = new Octokit({
         // @ts-ignore
@@ -42,12 +43,16 @@
             prs = (await octokit.rest.pulls.list({
                 owner: 'partofmyid',
                 repo: 'register',
-                state: 'open',
+                state: 'all',
+                per_page: 5,
+                head: `${username}:main`,
+                sort: 'created',
             })).data.filter(pr => pr.user?.login === username).map(pr => ({
                 title: pr.title,
                 state: pr.state,
                 url: pr.html_url,
                 number: pr.number,
+                status: pr.state,
             }));
         }
     });
@@ -95,15 +100,14 @@
         {#if prs.length !== 0}
             <div class="bg-ctp-base p-4">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
-                    <h2 class="text-2xl">Open PRs:</h2>
+                    <h2 class="text-2xl">PRs:</h2>
                     <i><a href="https://github.com/partofmyid/register/pulls">View all PRs</a></i>
                 </div>
                 <ul>
                     {#each prs as pr}
-                        <li>
-                            <input type="checkbox" readonly={true} checked={pr.state === 'closed'}/>
-                            <a href={pr.url}>#{pr.number}:</a>
-                            {pr.title}
+                        <li class="ml-0 list-none">
+                            - <span class="data-[open-pr]:italic data-[open-pr]:text-ctp-subtext0" data-open-pr={pr.state}>{pr.title}</span>
+                            <a href={pr.url} class="no-underline italic">#{pr.number}</a>
                         </li>
                     {/each}
                 </ul>
