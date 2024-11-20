@@ -24,7 +24,7 @@
             <a href="/json">json</a>
             <a href="/#" on:click={() => signOut({})}>logout</a>
         {:else}
-            <a href="https://github.com/partofmyid /register">register</a>
+            <a href="https://github.com/partofmyid/register">register</a>
             <a href="/#" on:click={() => signIn('github')}>login</a>
         {/if}
         <a href="/docs">docs</a>
