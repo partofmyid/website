@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { apiBaseURL } from "$lib";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
     import { Octokit } from "octokit";
@@ -29,14 +28,16 @@
 
     onMount(async () => {
         if (!q) return goto("/");
-        const res = await fetch(`${apiBaseURL}/query/check/${q}`).then((res) => res.json());
-        available = res.available;
+        const res = await fetch(`https://raw.githubusercontent.com/partofmyid/register/main/domains/${q}.json`).then(async (res) => {
+            // if ([404,])
+            available = res.status === 404;
 
-        if (!available) file = await fetch(`https://raw.githubusercontent.com/partofmyid/register/main/domains/${q}.json`).then(res => res.text());
-        else file = JSON.stringify({
-            owner: { username: user },
-            record: {},
-        }, null, 2);
+            file = available ? JSON.stringify({
+                owner: { username: user },
+                record: {},
+            }, null, 2) : await res.text();
+        });
+
         if ($page.data.session) {
             user = (await octokit.rest.users.getAuthenticated()).data.login;
             if (JSON.parse(file)?.owner?.username === user || available) editable = true;

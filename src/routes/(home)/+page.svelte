@@ -9,6 +9,7 @@
     let starsCount = 0;
     let forksCount = 0;
     let domainsCount = 0;
+    let showCount = true;
     
     let typingEffectInterval: NodeJS.Timeout;
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -35,7 +36,8 @@
                 forksCount = data.forks_count || 0;
             });
         fetch(`${apiBaseURL}/query/count`)
-            .then(res => res.json()).then(data => domainsCount = data.count || 0);
+            .then(res => res.json()).then(data => domainsCount = data.count || 0)
+            .catch(() => showCount = false);
     });
     onDestroy(() => clearInterval(typingEffectInterval));
 </script>
@@ -78,10 +80,12 @@
                 <h2>{starsCount}</h2>
                 <p class="text-sm">stars</p>
             </div>
-            <div class="p-2 rounded-sm text-ctp-blue">
-                <h2>{domainsCount}</h2>
-                <p class="text-sm">subdomains</p>
-            </div>
+            {#if showCount}
+                <div class="p-2 rounded-sm text-ctp-blue">
+                    <h2>{domainsCount}</h2>
+                    <p class="text-sm">subdomains</p>
+                </div>
+            {/if}
             <div class="p-2 rounded-sm text-ctp-green">
                 <h2>{forksCount}</h2>
                 <p class="text-sm">forks</p>

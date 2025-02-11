@@ -5,15 +5,7 @@
     import { onMount } from 'svelte';
 
     let username = '';
-    let selectedDomain: {
-        subdomain: string,
-        properties: {
-            owner: {
-                username: string,
-            },
-            record: Record<string, string>,
-        }
-    } | null = null;
+    let domainsFailed = false;
     let domains: {
         subdomain: string,
         properties: {
@@ -39,15 +31,18 @@
         if ($page.data.session) {
             const user = await octokit.rest.users.getAuthenticated();
             username = user.data.login;
-            domains =  await fetch(apiBaseURL + '/query/username/' + username).then(res => res.json());
+            domains = await fetch(apiBaseURL + '/query/username/' + username).then(res => res.json()).catch(err => {
+                alert('Failed to fetch domains from the api server, it is possible the server is currently unavailable.\n\n' + err);
+                domainsFailed = true;
+                return [];
+            });
             prs = (await octokit.rest.pulls.list({
                 owner: 'partofmyid',
                 repo: 'register',
                 state: 'all',
-                per_page: 5,
-                head: `${username}:main`,
+                direction: 'desc',
                 sort: 'created',
-            })).data.filter(pr => pr.user?.login === username).map(pr => ({
+            })).data.filter(pr => pr.user?.login === username).slice(0,10).map(pr => ({
                 title: pr.title,
                 state: pr.state,
                 url: pr.html_url,
@@ -60,54 +55,55 @@
 
 <main class="flex flex-col md:flex-row gap-2 justify-center items-center">
     {#if $page.data.session}
-        <div class="bg-ctp-base p-4">
-            <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
-                <h2 class="text-2xl">Subdomains:</h2>
-                <i>Create a new subdomain from the home page</i>
-            </div>
-            {#if domains.length !== 0}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Subdomain</th>
-                            <th>Records</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {#each domains as domain}
-                            <tr>
-                                <td>
-                                    <a class="no-underline" href={'/search?q='+domain.subdomain}><b>{domain.subdomain}</b>.part-of.my.id</a>
-                                </td>
-                                <td class="break-all font-mono">
-                                    <ul>
-                                        {#each Object.keys(domain.properties?.record || {}) as record}
-                                            <li><b>{record}</b>: {domain.properties.record[record]}</li>
-                                        {/each}
-                                    </ul>
-                                </td>
-                            </tr>
-                        {/each}
-                    </tbody>
-                </table>
-            {:else}
-                <p>
-                    <i>You don't have any subdomains yet. Create one from the home page.</i>
-                    <br><i>If your seeing this and have domains, try re-login.</i>
-                </p>
-            {/if}
-        </div>
-        {#if prs.length !== 0}
+        {#if !domainsFailed}
             <div class="bg-ctp-base p-4">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
+                    <h2 class="text-2xl">Subdomains:</h2>
+                    <i>Create a new subdomain from the home page</i>
+                </div>
+                {#if domains.length !== 0}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subdomain</th>
+                                <th>Records</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {#each domains as domain}
+                                <tr>
+                                    <td>
+                                        <a class="no-underline" href={'/search?q='+domain.subdomain}><b>{domain.subdomain}</b>.part-of.my.id</a>
+                                    </td>
+                                    <td class="break-all font-mono">
+                                        <ul>
+                                            {#each Object.keys(domain.properties?.record || {}) as record}
+                                                <li><b>{record}</b>: {domain.properties.record[record]}</li>
+                                            {/each}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            {/each}
+                        </tbody>
+                    </table>
+                {:else}
+                    <p class="text-sm">
+                        <i>You don't have any subdomains yet. Create one from the home page.</i>
+                        <br><i>If your seeing this and have domains, try re-login.</i>
+                    </p>
+                {/if}
+            </div>
+        {/if}
+        {#if prs.length !== 0}
+            <div class="bg-ctp-base p-4">
+                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">
                     <h2 class="text-2xl">PRs:</h2>
                     <i><a href="https://github.com/partofmyid/register/pulls">View all PRs</a></i>
                 </div>
                 <ul>
                     {#each prs as pr}
                         <li class="ml-0 list-none">
-                            - <span class="data-[open-pr]:italic data-[open-pr]:text-ctp-subtext0" data-open-pr={pr.state}>{pr.title}</span>
-                            <a href={pr.url} class="no-underline italic">#{pr.number}</a>
+                            - <a href={pr.url} class="data-[open-pr=false]:italic data-[open-pr=true]:font-bold no-underline" data-open-pr={pr.state === 'open'}>{pr.title}</a> <span class="italic">#{pr.number}</span>
                         </li>
                     {/each}
                 </ul>

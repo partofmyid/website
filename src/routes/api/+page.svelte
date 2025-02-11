@@ -17,16 +17,23 @@
         const params = (new URLSearchParams({
             pass
         })).toString();
-        const res = await fetch(apiBaseURL + routes[route] + '?' + params, {
-            method: method,
-        });
 
-        status = res.status;
-        data = (
-            res.headers.get('Content-Type')?.includes('application/json') ?
-            JSON.stringify(await res.json(), null, 2) :
-            await res.text()
-        );
+        try {
+            const res = await fetch(apiBaseURL + routes[route] + '?' + params, {
+                method: method,
+            });
+    
+            status = res.status;
+            data = (
+                res.headers.get('Content-Type')?.includes('application/json') ?
+                JSON.stringify(await res.json(), null, 2) :
+                await res.text()
+            );
+        } catch (error) {
+            status = -1;
+            data = error as string;
+        }
+
         loading = false;
     }
 </script>
