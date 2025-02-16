@@ -5,7 +5,6 @@
     import { Octokit } from "octokit";
     import RecordsForm from "$lib/RecordsForm.svelte";
     
-    let recordsForm: RecordsForm;
     let available = false;
     let editable = false;
     let file = "{}";

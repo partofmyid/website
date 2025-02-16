@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { apiBaseURL } from "$lib";
     import { onMount, onDestroy } from "svelte";
 
     let maintainers: any[] = [];
@@ -9,7 +8,6 @@
     let starsCount = 0;
     let forksCount = 0;
     let domainsCount = 0;
-    let showCount = true;
     
     let typingEffectInterval: NodeJS.Timeout;
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -35,9 +33,8 @@
                 starsCount = data.stargazers_count || 0;
                 forksCount = data.forks_count || 0;
             });
-        fetch(`${apiBaseURL}/query/count`)
-            .then(res => res.json()).then(data => domainsCount = data.count || 0)
-            .catch(() => showCount = false);
+        fetch("https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/count.txt")
+            .then(res => res.text()).then(data => domainsCount = parseInt(data) || 0);
     });
     onDestroy(() => clearInterval(typingEffectInterval));
 </script>
@@ -45,18 +42,18 @@
 <svelte:head>
     <title>part-of.my.id</title>
     <meta name="title" content="part-of.my.id" />
-    <meta name="description" content="your own personal id for your website" />
+    <meta name="description" content="your own personal id for your website, in other words: free subdomain service" />
     <meta name="theme-color" content="#89dceb" />
 
     <meta property="og:title" content="part-of.my.id" />
-    <meta property="og:description" content="your own personal id for your website" />
+    <meta property="og:description" content="your own personal id for your website, in other words: free subdomain service" />
     <meta property="og:url" content="https://part-of.my.id" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/profile/image.png" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/banner.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="part-of.my.id" />
-    <meta name="twitter:description" content="your own personal id for your website" />
+    <meta name="twitter:description" content="your own personal id for your website, in other words: free subdomain service" />
     <meta name="twitter:image" content="https://raw.githubusercontent.com/partofmyid/.github/refs/heads/main/banner.png" />
     <meta name="twitter:url" content="https://part-of.my.id" />
 </svelte:head>
@@ -80,20 +77,24 @@
                 <h2>{starsCount}</h2>
                 <p class="text-sm">stars</p>
             </div>
-            {#if showCount}
-                <div class="p-2 rounded-sm text-ctp-blue">
-                    <h2>{domainsCount}</h2>
-                    <p class="text-sm">subdomains</p>
-                </div>
-            {/if}
+            <div class="p-2 rounded-sm text-ctp-blue">
+                <h2>{domainsCount}</h2>
+                <p class="text-sm">subdomains</p>
+            </div>
             <div class="p-2 rounded-sm text-ctp-green">
                 <h2>{forksCount}</h2>
                 <p class="text-sm">forks</p>
             </div>
         </div>
     </div>
-    <p class="text-center" id="introduction"><a href="/#introduction">scroll down:</a></p>
-    <section class="lg:flex-row items-start lg:items-center flex-col">
+    <p class="text-center" id="introduction"><a href="/#introduction">what is this?</a></p>
+    <section>
+        <p class="text-center md:text-xl">
+            <b>part-of.my.id is a free subdomain service</b> that allows you to have a nice subdomain for your website for free. We are a group of volunteers who are passionate about web development and want to make it easier for everyone to have their own unique web address.
+        </p>
+    </section>
+    <h1 class="text-center">Why Us?</h1>
+    <section class="lg:flex-row items-start lg:items-center flex-col mt-6">
         <div>
             <h2>Sleek and memorable web address</h2>
             <p>

@@ -1,20 +1,11 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import { Octokit } from 'octokit';
-    import { apiBaseURL } from '$lib';
     import { onMount } from 'svelte';
 
     let username = '';
     let domainsFailed = false;
-    let domains: {
-        subdomain: string,
-        properties: {
-            owner: {
-                username: string,
-            },
-            record: Record<string, string>,
-        }
-    }[] = [];
+    let domains: string[] = [];
     let prs: {
         title: string,
         state: string,
@@ -31,7 +22,7 @@
         if ($page.data.session) {
             const user = await octokit.rest.users.getAuthenticated();
             username = user.data.login;
-            domains = await fetch(apiBaseURL + '/query/username/' + username).then(res => res.json()).catch(err => {
+            domains = await fetch('https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/dict.json').then(res => res.json()).then(data => data[username]).catch(err => {
                 alert('Failed to fetch domains from the api server, it is possible the server is currently unavailable.\n\n' + err);
                 domainsFailed = true;
                 return [];
@@ -59,33 +50,20 @@
             <div class="bg-ctp-base p-4">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
                     <h2 class="text-2xl">Subdomains:</h2>
-                    <i>Create a new subdomain from the home page</i>
+                    <a href="/">New</a>
                 </div>
                 {#if domains.length !== 0}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Subdomain</th>
-                                <th>Records</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {#each domains as domain}
-                                <tr>
-                                    <td>
-                                        <a class="no-underline" href={'/search?q='+domain.subdomain}><b>{domain.subdomain}</b>.part-of.my.id</a>
-                                    </td>
-                                    <td class="break-all font-mono">
-                                        <ul>
-                                            {#each Object.keys(domain.properties?.record || {}) as record}
-                                                <li><b>{record}</b>: {domain.properties.record[record]}</li>
-                                            {/each}
-                                        </ul>
-                                    </td>
-                                </tr>
-                            {/each}
-                        </tbody>
-                    </table>
+                    <ul class="flex flex-col gap-2">
+                        {#each domains as domain}
+                            <li class="ml-0 flex gap-4">
+                                <span><b>{domain}</b><span class="text-ctp-subtext1">.part-of.my.id</span></span>
+                                <span class="text-xs">
+                                    <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={"/search?q=" + encodeURIComponent(domain)}>View</a></button>
+                                    <button class="rounded-r-full"><a class="no-underline text-ctp-text" href={"https://" + domain + ".part-of.my.id"} target="_blank">Visit</a></button>
+                                </span>
+                            </li>
+                        {/each}
+                    </ul>
                 {:else}
                     <p class="text-sm">
                         <i>You don't have any subdomains yet. Create one from the home page.</i>
@@ -113,4 +91,3 @@
         <h1 class="text-2xl">Please log in to view your domains</h1>
     {/if}
 </main>
-<a href="/api" class="w-min">_</a>
