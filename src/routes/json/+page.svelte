@@ -28,7 +28,6 @@
         <h2 class="mb-2">JSON Generator</h2>
         <RecordsForm onConvert={(generated) => {
             json = generated;
-            console.log(json);
         }} {username} />
     </div>
     <div class="p-4 bg-ctp-base">
