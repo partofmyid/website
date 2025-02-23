@@ -20,26 +20,25 @@
     });
 
     onMount(() => {
-        fetch('https://api.github.com/orgs/partofmyid/members')
-            .then(res => res.json()).then(data => {
-                let names = data.map((member: { login: string }) => member.login?.toLocaleLowerCase() || "");
+        octokit.request('GET /orgs/partofmyid/members').then(({ data }) => {
+                let names = data.map((member: { login: string }) => member.login?.toLowerCase() || "");
                 maintainers = data;
                 names.push("your-name");
                 typingEffectInterval = setInterval(async () => {
                     i++;
                     if (i >= names.length) clearInterval(typingEffectInterval);
-                
                     for (let j = 0; j < names[i].length; j++) {
                         await sleep(150);
                         exampleName = names[i].slice(0, j + 1);
                     }
                 }, 1700);
             });
-        fetch("https://api.github.com/repos/partofmyid/register")
-            .then(res => res.json()).then(data => {
-                starsCount = data.stargazers_count || 0;
-                forksCount = data.forks_count || 0;
-            });
+
+        octokit.request('GET /repos/partofmyid/register').then(({ data }) => {
+            starsCount = data.stargazers_count || 0;
+            forksCount = data.forks_count || 0;
+        });
+        
         fetch("https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/count.txt")
             .then(res => res.text()).then(data => domainsCount = parseInt(data) || 0);
     });
