@@ -1,5 +1,7 @@
 <script lang="ts">
+    import { page } from "$app/state";
     import { onMount, onDestroy } from "svelte";
+    import { Octokit } from "octokit";
 
     let maintainers: any[] = $state([]);
     let exampleName = $state("your-name");
@@ -11,6 +13,11 @@
 
     let typingEffectInterval: ReturnType<typeof setInterval>;
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+    const octokit = new Octokit({
+        // @ts-ignore
+        auth: page.data.session?.access_token || '',
+    });
 
     onMount(() => {
         fetch('https://api.github.com/orgs/partofmyid/members')

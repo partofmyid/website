@@ -1,12 +1,12 @@
 <script lang="ts">
     import RecordsForm from "$lib/RecordsForm.svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { Octokit } from "octokit";
     import { onMount } from "svelte";
     import type { SubdomainJSON } from "$lib";
     const octokit = new Octokit({
         // @ts-ignore
-        auth: $page.data.session?.access_token || '',
+        auth: page.data.session?.access_token || '',
     });
 
     let username = $state('');

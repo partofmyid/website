@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { goto } from "$app/navigation";
     import { Octokit } from "octokit";
     import RecordsForm from "$lib/RecordsForm.svelte";
@@ -11,11 +11,11 @@
     let file = $state("{}");
     let user = $state('');
     let readme = '';
-    const search = new URLSearchParams($page.url.search);
+    const search = new URLSearchParams(page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
         // @ts-ignore
-        auth: $page.data.session?.access_token || '',
+        auth: page.data.session?.access_token || '',
     });
 
     onMount(async () => {
@@ -30,7 +30,7 @@
             }, null, 2) : await res.text();
         });
 
-        if ($page.data.session) {
+        if (page.data.session) {
             user = (await octokit.rest.users.getAuthenticated()).data.login;
             if (JSON.parse(file)?.owner?.username === user || available) editable = true;
         }

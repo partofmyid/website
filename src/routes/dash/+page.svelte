@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { Octokit } from 'octokit';
     import { onMount } from 'svelte';
 
@@ -14,11 +14,11 @@
     }[] = $state([]);
     const octokit = new Octokit({
         // @ts-ignore
-        auth: $page.data.session?.access_token || '',
+        auth: page.data.session?.access_token || '',
     });
 
     onMount(async () => {
-        if ($page.data.session) {
+        if (page.data.session) {
             const user = await octokit.rest.users.getAuthenticated();
             username = user.data.login;
             domains = await fetch('https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/dict.json').then(res => res.json()).then(data => data[username]);
@@ -40,7 +40,7 @@
 </script>
 
 <main class="flex flex-col md:flex-row gap-2 justify-center items-center">
-    {#if $page.data.session}
+    {#if page.data.session}
         <div class="bg-ctp-base p-4">
             <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
                 <h2 class="text-2xl">Subdomains:</h2>

@@ -1,7 +1,7 @@
 <script>
     import { page } from '$app/stores';
 
-    let params = new URLSearchParams($page.url.search);
+    let params = new URLSearchParams(page.url.search);
     let subdomain = params.get('d');
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { signIn, signOut } from "@auth/sveltekit/client";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import "../app.css";
     import { onMount } from "svelte";
     import { dev } from "$app/environment";
@@ -11,23 +11,23 @@
     let { children }: Props = $props();
 
     onMount(() => {
-        if (!$page.data.session) return;
-        if (dev) console.log($page.data.session);
+        if (!page.data.session) return;
+        if (dev) console.log(page.data.session);
 
-        if (new Date($page.data.session.expires).getTime() < Date.now()) signOut({});
+        if (new Date(page.data.session.expires).getTime() < Date.now()) signOut({});
     });
 </script>
 
 <header>
     <h1 class="text-xl"><a class="text-ctp-gren no-underline" href="/">part-of.my.id</a></h1>
-    {#if $page.data.session}
+    {#if page.data.session}
         <div class="flex gap-2 items-center">
-            <img src={$page.data.session.user?.image} alt="user" class="size-8 rounded-full border-2 border-ctp-overlay2">
-            <p class="text-ctp-subtext1 hidden sm:block">{$page.data.session.user?.name}</p>
+            <img src={page.data.session.user?.image} alt="user" class="size-8 rounded-full border-2 border-ctp-overlay2">
+            <p class="text-ctp-subtext1 hidden sm:block">{page.data.session.user?.name}</p>
         </div>
     {/if}
     <nav>
-        {#if $page.data.session}
+        {#if page.data.session}
             <a href="/dash">dash</a>
             <a href="/json">json</a>
             <a href="/#" onclick={() => signOut({})}>logout</a>
