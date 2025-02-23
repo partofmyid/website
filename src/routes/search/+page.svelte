@@ -6,10 +6,10 @@
     import RecordsForm from "$lib/RecordsForm.svelte";
     // import Markdown from "svelte-exmarkdown";
     
-    let available = false;
-    let editable = false;
-    let file = "{}";
-    let user = '';
+    let available = $state(false);
+    let editable = $state(false);
+    let file = $state("{}");
+    let user = $state('');
     let readme = '';
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
@@ -75,7 +75,7 @@
                             }>Owner</a></button>
                         {/if}
                     {:else}
-                        <button class="rounded-full bg-ctp-sapphire text-ctp-crust" on:click={commit}>Register</button>
+                        <button class="rounded-full bg-ctp-sapphire text-ctp-crust" onclick={commit}>Register</button>
                     {/if}
                 </div>
             </div>
@@ -92,7 +92,7 @@
                 <div class="flex justify-between">
                     <code>domains/{q}.json</code>
                     {#if editable}
-                        <button class="bg-ctp-green text-ctp-crust" on:click={commit}>
+                        <button class="bg-ctp-green text-ctp-crust" onclick={commit}>
                             Edit
                         </button>
                     {/if}

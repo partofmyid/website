@@ -23,18 +23,28 @@
         "NS": "something.cloudflare.com",
     };
 
-    export let onConvert: (json: SubdomainJSON) => void = () => {};
-    export let readonly = false;
-    export let username = '';
-    export let autogen = false;
-    export let json: SubdomainJSON = {
+    interface Props {
+        onConvert?: (json: SubdomainJSON) => void;
+        readonly?: boolean;
+        username?: string;
+        autogen?: boolean;
+        json?: SubdomainJSON;
+    }
+
+    let {
+        onConvert = () => {},
+        readonly = false,
+        username = '',
+        autogen = false,
+        json = $bindable({
         owner: { username },
         record: {},
-    };
+    })
+    }: Props = $props();
 
-    let usingCNAME = false;
-    let busy = false;
-    let inputs: HTMLInputElement[] = [];
+    let usingCNAME = $state(false);
+    let busy = $state(false);
+    let inputs: HTMLInputElement[] = $state([]);
     let proxy = writable(false);
     let CNAME = writable('');
     let record: Writable<[
@@ -85,7 +95,7 @@
     }
 </script>
 
-<form on:submit={convert}>
+<form onsubmit={convert}>
     <div class="flex flex-col gap-1 mb-1">
         <label>
             <input type="checkbox" bind:checked={$proxy} disabled={readonly} />
@@ -110,7 +120,7 @@
                     {#if !readonly}
                         <button
                             type="button" disabled={$record.length === 1}
-                            on:click={() => $record = $record.filter((_,j) => j !== i)}
+                            onclick={() => $record = $record.filter((_,j) => j !== i)}
                         >Remove</button>
                     {/if}
                 </div>
@@ -127,7 +137,7 @@
             <div>
                 <button
                     type="button"
-                    on:click={() => $record = [...$record, ["A",""]]}
+                    onclick={() => $record = [...$record, ["A",""]]}
                     disabled={usingCNAME}
                 >Add</button>
                 {#if !autogen}

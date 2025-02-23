@@ -4,14 +4,14 @@
     import { onMount } from 'svelte';
 
     let username = '';
-    let domains: string[] = [];
+    let domains: string[] = $state([]);
     let prs: {
         title: string,
         state: string,
         url: string,
         number: number,
         status: string,
-    }[] = [];
+    }[] = $state([]);
     const octokit = new Octokit({
         // @ts-ignore
         auth: $page.data.session?.access_token || '',

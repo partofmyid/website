@@ -9,8 +9,8 @@
         auth: $page.data.session?.access_token || '',
     });
 
-    let username = '';
-    let json: SubdomainJSON | {} = {};
+    let username = $state('');
+    let json: SubdomainJSON | {} = $state({});
 
     onMount(async () => {
         try {

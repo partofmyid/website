@@ -1,15 +1,15 @@
 <script lang="ts">
     import { onMount, onDestroy } from "svelte";
 
-    let maintainers: any[] = [];
-    let exampleName = "your-name";
+    let maintainers: any[] = $state([]);
+    let exampleName = $state("your-name");
     let i = -1;
     
-    let starsCount = 0;
-    let forksCount = 0;
-    let domainsCount = 0;
-    
-    let typingEffectInterval: NodeJS.Timeout;
+    let starsCount = $state(0);
+    let forksCount = $state(0);
+    let domainsCount = $state(0);
+
+    let typingEffectInterval: ReturnType<typeof setInterval>;
     const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
     onMount(() => {

@@ -4,6 +4,11 @@
     import "../app.css";
     import { onMount } from "svelte";
     import { dev } from "$app/environment";
+    interface Props {
+        children?: import('svelte').Snippet;
+    }
+
+    let { children }: Props = $props();
 
     onMount(() => {
         if (!$page.data.session) return;
@@ -25,16 +30,16 @@
         {#if $page.data.session}
             <a href="/dash">dash</a>
             <a href="/json">json</a>
-            <a href="/#" on:click={() => signOut({})}>logout</a>
+            <a href="/#" onclick={() => signOut({})}>logout</a>
         {:else}
             <a href="https://github.com/partofmyid/register">register</a>
-            <a href="/#" on:click={() => signIn('github')}>login</a>
+            <a href="/#" onclick={() => signIn('github')}>login</a>
         {/if}
         <a href="/docs">docs</a>
     </nav>
 </header>
 
-<slot />
+{@render children?.()}
 
 <footer class="border-t border-ctp-base mt-4">
     <p class="text-center">made in <span class="bg-gradient-to-t from-ctp-text via-ctp-red to-ctp-red bg-clip-text text-transparent font-semibold">indonesia</span> by <a href="//satr14.my.id">satr14</a></p>
