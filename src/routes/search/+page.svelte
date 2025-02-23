@@ -4,26 +4,19 @@
     import { goto } from "$app/navigation";
     import { Octokit } from "octokit";
     import RecordsForm from "$lib/RecordsForm.svelte";
+    // import Markdown from "svelte-exmarkdown";
     
     let available = false;
     let editable = false;
     let file = "{}";
     let user = '';
+    let readme = '';
     const search = new URLSearchParams($page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
         // @ts-ignore
         auth: $page.data.session?.access_token || '',
     });
-
-    function register(record: Record<string, any>) {
-        window.open('https://github.com/partofmyid/register/new/main/domains?filename=' + q + '.json'
-            + '&value=' + encodeURIComponent(JSON.stringify({
-                owner: {
-                    username: user,
-                }, record,
-            }, null, 4)));
-    }
 
     onMount(async () => {
         if (!q) return goto("/");
@@ -41,6 +34,8 @@
             user = (await octokit.rest.users.getAuthenticated()).data.login;
             if (JSON.parse(file)?.owner?.username === user || available) editable = true;
         }
+
+        await fetch('https://raw.githubusercontent.com/partofmyid/register/main/README.md').then(res => res.text()).then(data => readme = data);
     });
 
     function commit() {
@@ -55,32 +50,37 @@
 
 <main class="flex justify-center items-center">
     <div class="flex flex-col md:flex-row gap-4 mx-2">
-        <div class="bg-ctp-base p-4 flex flex-col h-min">
-            <div>
-                <h1><span class="underline">{q}</span><span class="text-ctp-subtext0">.part-of.my.id</span></h1>
-                <h2 class="text-base italic text-ctp-red data-[available=true]:text-ctp-green" data-available={available || editable}>is {available ? 'available!' : (editable ? 'owned by you!' : 'taken... sorry')}</h2>
-                {#if !available && JSON.parse(file).description}
-                    <p>
-                        {JSON.parse(file).description}
-                    </p>
-                {/if}
-            </div>
-            <div class="my-2">
-                {#if !available}
-                    <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={
-                        'https://' + q + '.part-of.my.id'
-                    } target="_blank">Visit</a></button>
-                    <button data-owner={editable} class="data-[owner=true]:rounded-r-full"><a class="no-underline text-ctp-text" href={
-                        'https://github.com/partofmyid/register/blob/main/domains/' + q + '.json'
-                    }>File</a></button>
-                    {#if !editable}
-                        <button class="rounded-r-full"><a  class="text-ctp-text no-underline" href={
-                            'https://github.com/' + JSON.parse(file)?.owner?.username
-                        }>Owner</a></button>
+        <div class="flex flex-col gap-4 w-min">
+            <div class="bg-ctp-base p-4 flex flex-col h-min">
+                <div>
+                    <h1 class="text-nowrap"><span class="underline">{q}</span><span class="text-ctp-subtext0">.part-of.my.id</span></h1>
+                    <h2 class="text-base italic text-ctp-red data-[available=true]:text-ctp-green" data-available={available || editable}>is {available ? 'available!' : (editable ? 'owned by you!' : 'taken... sorry')}</h2>
+                    {#if !available && JSON.parse(file).description}
+                        <p>
+                            {JSON.parse(file).description}
+                        </p>
                     {/if}
-                {:else}
-                    <button class="rounded-full bg-ctp-sapphire text-ctp-crust" on:click={commit}>Register</button>
-                {/if}
+                </div>
+                <div class="my-2">
+                    {#if !available}
+                        <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={
+                            'https://' + q + '.part-of.my.id'
+                        } target="_blank">Visit</a></button>
+                        <button data-owner={editable} class="data-[owner=true]:rounded-r-full"><a class="no-underline text-ctp-text" href={
+                            'https://github.com/partofmyid/register/blob/main/domains/' + q + '.json'
+                        }>File</a></button>
+                        {#if !editable}
+                            <button class="rounded-r-full"><a  class="text-ctp-text no-underline" href={
+                                'https://github.com/' + JSON.parse(file)?.owner?.username
+                            }>Owner</a></button>
+                        {/if}
+                    {:else}
+                        <button class="rounded-full bg-ctp-sapphire text-ctp-crust" on:click={commit}>Register</button>
+                    {/if}
+                </div>
+            </div>
+            <div class="bg-ctp-base p-4 flex flex-col h-min max-w-container">
+                <!-- <Markdown source={readme}/> -->
             </div>
         </div>
         <div class="bg-ctp-base p-4 h-min">

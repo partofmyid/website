@@ -6,7 +6,10 @@
     import { dev } from "$app/environment";
 
     onMount(() => {
+        if (!$page.data.session) return;
         if (dev) console.log($page.data.session);
+
+        if (new Date($page.data.session.expires).getTime() < Date.now()) signOut({});
     });
 </script>
 

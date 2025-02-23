@@ -4,7 +4,6 @@
     import { onMount } from 'svelte';
 
     let username = '';
-    let domainsFailed = false;
     let domains: string[] = [];
     let prs: {
         title: string,
@@ -22,11 +21,7 @@
         if ($page.data.session) {
             const user = await octokit.rest.users.getAuthenticated();
             username = user.data.login;
-            domains = await fetch('https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/dict.json').then(res => res.json()).then(data => data[username]).catch(err => {
-                alert('Failed to fetch domains from the api server, it is possible the server is currently unavailable.\n\n' + err);
-                domainsFailed = true;
-                return [];
-            });
+            domains = await fetch('https://raw.githubusercontent.com/partofmyid/register/refs/heads/main/stats/dict.json').then(res => res.json()).then(data => data[username]);
             prs = (await octokit.rest.pulls.list({
                 owner: 'partofmyid',
                 repo: 'register',
@@ -46,32 +41,30 @@
 
 <main class="flex flex-col md:flex-row gap-2 justify-center items-center">
     {#if $page.data.session}
-        {#if !domainsFailed}
-            <div class="bg-ctp-base p-4">
-                <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
-                    <h2 class="text-2xl">Subdomains:</h2>
-                    <a href="/">New</a>
-                </div>
-                {#if domains.length !== 0}
-                    <ul class="flex flex-col gap-2">
-                        {#each domains as domain}
-                            <li class="ml-0 flex gap-4">
-                                <span><b>{domain}</b><span class="text-ctp-subtext1">.part-of.my.id</span></span>
-                                <span class="text-xs">
-                                    <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={"/search?q=" + encodeURIComponent(domain)}>View</a></button>
-                                    <button class="rounded-r-full"><a class="no-underline text-ctp-text" href={"https://" + domain + ".part-of.my.id"} target="_blank">Visit</a></button>
-                                </span>
-                            </li>
-                        {/each}
-                    </ul>
-                {:else}
-                    <p class="text-sm">
-                        <i>You don't have any subdomains yet. Create one from the home page.</i>
-                        <br><i>If your seeing this and have domains, try re-login.</i>
-                    </p>
-                {/if}
+        <div class="bg-ctp-base p-4">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-4 gap-2">
+                <h2 class="text-2xl">Subdomains:</h2>
+                <a href="/">New</a>
             </div>
-        {/if}
+            {#if domains.length !== 0}
+                <ul class="flex flex-col gap-2">
+                    {#each domains as domain}
+                        <li class="ml-0 flex gap-4">
+                            <span><b>{domain}</b><span class="text-ctp-subtext1">.part-of.my.id</span></span>
+                            <span class="text-xs">
+                                <button class="rounded-l-full bg-ctp-sapphire"><a class="no-underline text-ctp-crust" href={"/search?q=" + encodeURIComponent(domain)}>View</a></button>
+                                <button class="rounded-r-full"><a class="no-underline text-ctp-text" href={"https://" + domain + ".part-of.my.id"} target="_blank">Visit</a></button>
+                            </span>
+                        </li>
+                    {/each}
+                </ul>
+            {:else}
+                <p class="text-sm">
+                    <i>You don't have any subdomains yet. Create one from the home page.</i>
+                    <br><i>If your seeing this and have domains, try re-login.</i>
+                </p>
+            {/if}
+        </div>
         {#if prs.length !== 0}
             <div class="bg-ctp-base p-4">
                 <div class="flex flex-col sm:flex-row justify-between sm:items-center mb-2 gap-2">

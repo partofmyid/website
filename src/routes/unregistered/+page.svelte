@@ -8,7 +8,7 @@
 <main class="flex gap-4 justify-center items-center max-w-3xl mx-auto">
     <div class="flex flex-col gap-2 justify-center items-center mx-4">
         {#if subdomain}
-            <h2>{subdomain}.part-of.my.id is unavailable</h2>
+            <h2>{subdomain}.part-of.my.id is available!</h2>
         {/if}
         <p>If you're seeing this page, then theres a couple of possibilities:</p>
         <div class="flex flex-col gap-2 items-stretch max-w-3xl">

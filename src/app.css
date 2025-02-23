@@ -9,6 +9,7 @@ header { @apply sticky top-0 bg-ctp-base flex justify-between items-center gap-2
 footer { @apply flex flex-col justify-center items-center p-6 pt-2; }
 main { @apply flex-1; }
 section { @apply px-8 my-32 sm:my-24 md:my-16 mx-auto max-w-5xl flex gap-4 justify-center; }
+blockquote { @apply border-l-4 p-2; }
 article { @apply p-4 sm:p-6 md:p-8 flex flex-col gap-4; }
 
 h1 { @apply text-3xl sm:text-4xl font-semibold; }
