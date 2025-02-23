@@ -4,13 +4,19 @@
     import { goto } from "$app/navigation";
     import { Octokit } from "octokit";
     import RecordsForm from "$lib/RecordsForm.svelte";
-    // import Markdown from "svelte-exmarkdown";
+    import { gfmPlugin } from "svelte-exmarkdown/gfm";
+    import { remarkAlert } from "remark-github-blockquote-alert";
+    import Markdown from "svelte-exmarkdown";
+    import type { Plugin } from "svelte-exmarkdown";
+    import rehypeRaw from 'rehype-raw';
+    import 'remark-github-blockquote-alert/alert.css';
     
     let available = $state(false);
     let editable = $state(false);
     let file = $state("{}");
     let user = $state('');
-    let readme = '';
+    let readme = $state('');
+    const plugins: Plugin[] = [ gfmPlugin(), { rehypePlugin: [rehypeRaw] }, { remarkPlugin: [remarkAlert] } ];
     const search = new URLSearchParams(page.url.search);
     const q = search.get("q");
     const octokit = new Octokit({
@@ -80,7 +86,10 @@
                 </div>
             </div>
             <div class="bg-ctp-base p-4 flex flex-col h-min max-w-container">
-                <!-- <Markdown source={readme}/> -->
+                <details open={editable}>
+                    <summary>README.md</summary>
+                    <Markdown md={readme} {plugins} />
+                </details>
             </div>
         </div>
         <div class="bg-ctp-base p-4 h-min">
