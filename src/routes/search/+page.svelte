@@ -85,7 +85,7 @@
                     {/if}
                 </div>
             </div>
-            <div class="bg-ctp-base p-4 flex flex-col h-min max-w-container">
+            <div class="bg-ctp-base p-4 flex flex-col h-min sm-max-w-container">
                 <details open={editable}>
                     <summary>README.md</summary>
                     <Markdown md={readme} {plugins} />
